@@ -16,6 +16,7 @@ LABEL maintainer="Eduardo Bizarro <edbizarro@gmail.com>" \
   org.label-schema.vcs-ref=$VCS_REF
 
 # Set correct environment variables
+ENV COMPOSER_VERSION=$COMPOSER_VERSION
 ENV IMAGE_USER=php
 ENV HOME=/home/$IMAGE_USER
 ENV COMPOSER_HOME=$HOME/.composer
@@ -43,6 +44,7 @@ RUN chmod +x /tmp/*.sh \
   && bash ./nodeyarn.sh \
   && echo "$IMAGE_USER  ALL = ( ALL ) NOPASSWD: ALL" >> /etc/sudoers \
   && curl -fsSL https://goss.rocks/install | GOSS_VER=v${GOSS_VERSION} sh \
+  && bash ./composer.sh \
   && bash ./cleanup.sh
 
 USER $IMAGE_USER
