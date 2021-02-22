@@ -42,9 +42,11 @@ RUN chmod +x /tmp/*.sh \
   && bash ./packages.sh \
   && bash ./extensions.sh \
   && bash ./nodeyarn.sh \
+  && bash ./composer.sh \
+  && rm -rf ~/.composer/cache/* \
+  && chown -R $IMAGE_USER:$IMAGE_USER /var/www $HOME \
   && echo "$IMAGE_USER  ALL = ( ALL ) NOPASSWD: ALL" >> /etc/sudoers \
   && curl -fsSL https://goss.rocks/install | GOSS_VER=v${GOSS_VERSION} sh \
-  && bash ./composer.sh \
   && bash ./cleanup.sh
 
 USER $IMAGE_USER
