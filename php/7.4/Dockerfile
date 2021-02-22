@@ -27,7 +27,7 @@ USER root
 WORKDIR /tmp
 
 # COPY INSTALL SCRIPTS
-COPY --from=composer:$COMPOSER_VERSION /usr/bin/composer /usr/bin/composer
+COPY --from=composer:${COMPOSER_VERSION} /usr/bin/composer /usr/bin/composer
 COPY ./php/scripts/*.sh /tmp/
 RUN chmod +x /tmp/*.sh
 
