@@ -8,8 +8,6 @@ image: docker:latest
 
 variables:
   DOCKER_DRIVER: overlay2
-  NAMESPACE: mrofi/gitlab-ci-pipeline-php
-  NAMESPACE_COMPOSER_1: mrofi/gitlab-ci-pipeline-php-composer-1
 
 services:
   - docker:dind
@@ -20,6 +18,7 @@ before_script:
 Alpine 7.2:
   stage: build
   variables:
+    NAMESPACE: mrofi/gitlab-ci-pipeline-php
     IMAGE_VERSION: "7.2-alpine"
   script:
     - docker pull php:$IMAGE_VERSION || true
@@ -27,10 +26,17 @@ Alpine 7.2:
     - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/alpine/Dockerfile .
     - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/goss-7.2.yaml v
     - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
 
+Alpine 7.2 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: mrofi/gitlab-ci-pipeline-php-composer-1
+    IMAGE_VERSION: "7.2-alpine"
+  script:
     - docker pull php:$IMAGE_VERSION || true
-    - docker pull $NAMESPACE_COMPOSER_1:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE_COMPOSER_1:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE_COMPOSER_1:$IMAGE_VERSION -f php/7.2/alpine/Dockerfile .
-    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE_COMPOSER_1:$IMAGE_VERSION goss -g tests/goss-7.2.yaml v
-    - docker push $NAMESPACE_COMPOSER_1:$IMAGE_VERSION
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/alpine/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/goss-7.2.yaml v
+    - docker push $NAMESPACE:$IMAGE_VERSION
   when: always
