@@ -1,4 +1,4 @@
-FROM edbizarro/gitlab-ci-pipeline-php:8.0
+FROM mrofi/gitlab-ci-pipeline-php-composer-1:8.0
 
 ARG BUILD_DATE
 ARG VCS_REF
