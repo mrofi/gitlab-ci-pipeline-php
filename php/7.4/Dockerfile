@@ -1,6 +1,7 @@
+ARG COMPOSER_VERSION=2
+FROM composer:${COMPOSER_VERSION} as composer_image
 FROM php:7.4
 
-ARG COMPOSER_VERSION=2
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -27,7 +28,7 @@ USER root
 WORKDIR /tmp
 
 # COPY INSTALL SCRIPTS
-COPY --from=composer:${COMPOSER_VERSION} /usr/bin/composer /usr/bin/composer
+COPY --from=composer_image /usr/bin/composer /usr/bin/composer
 COPY ./php/scripts/*.sh /tmp/
 RUN chmod +x /tmp/*.sh
 
