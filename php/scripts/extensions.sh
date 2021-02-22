@@ -177,7 +177,7 @@ else
     && docker-php-source delete
 
   pecl channel-update pecl.php.net \
-    && pecl install amqp redis apcu mongodb imagick xdebug \
+    && pecl install amqp redis apcu mongodb imagick xdebug-2.9.8 \
     && docker-php-ext-enable amqp redis apcu mongodb imagick xdebug
 fi
 
