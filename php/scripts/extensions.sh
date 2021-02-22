@@ -119,7 +119,7 @@ if ! [[ $PHP_VERSION == "8.0" ]]; then
     && docker-php-source delete
 
   pecl channel-update pecl.php.net \
-    && pecl install redis apcu mongodb xdebug \
+    && pecl install redis apcu mongodb xdebug-2.9.8 \
     && docker-php-ext-enable redis apcu mongodb xdebug
 
   #AMQP
@@ -177,7 +177,7 @@ else
     && docker-php-source delete
 
   pecl channel-update pecl.php.net \
-    && pecl install amqp redis apcu mongodb imagick xdebug-2.9.8 \
+    && pecl install amqp redis apcu mongodb imagick xdebug \
     && docker-php-ext-enable amqp redis apcu mongodb imagick xdebug
 fi
 
