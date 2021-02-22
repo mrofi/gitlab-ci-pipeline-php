@@ -1,5 +1,6 @@
 FROM php:7.4-alpine
 
+ARG COMPOSER_VERSION=2
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -27,7 +28,7 @@ ENV PHP_VERSION=7.4
 WORKDIR /tmp
 
 COPY ./php/scripts/alpine/*.sh /tmp/
-COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:$COMPOSER_VERSION /usr/bin/composer /usr/bin/composer
 COPY --from=mhart/alpine-node:14 /usr/bin/node /usr/bin/
 COPY --from=mhart/alpine-node:14 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/* /usr/lib/
 

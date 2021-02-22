@@ -1,5 +1,6 @@
 FROM mrofi/gitlab-ci-pipeline-php-composer-1:7.3
 
+ARG COMPOSER_VERSION=2
 ARG BUILD_DATE
 ARG VCS_REF
 
