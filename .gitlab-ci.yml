@@ -18,25 +18,472 @@ before_script:
 Alpine 7.2:
   stage: build
   variables:
-    NAMESPACE: mrofi/gitlab-ci-pipeline-php
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
     IMAGE_VERSION: "7.2-alpine"
+    GOSS_FILE: "goss-7.2.yaml"
   script:
     - docker pull php:$IMAGE_VERSION || true
     - docker pull $NAMESPACE:$IMAGE_VERSION || true
     - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/alpine/Dockerfile .
-    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/goss-7.2.yaml v
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
     - docker push $NAMESPACE:$IMAGE_VERSION
   when: always
 
 Alpine 7.2 with composer v1:
   stage: build
   variables:
-    NAMESPACE: mrofi/gitlab-ci-pipeline-php-composer-1
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
     IMAGE_VERSION: "7.2-alpine"
+    GOSS_FILE: "goss-7.2.yaml"
   script:
     - docker pull php:$IMAGE_VERSION || true
     - docker pull $NAMESPACE:$IMAGE_VERSION || true
     - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/alpine/Dockerfile .
-    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/goss-7.2.yaml v
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
     - docker push $NAMESPACE:$IMAGE_VERSION
   when: always
+
+Alpine 7.2 LTS:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.2-alpine-lts"
+    GOSS_FILE: "goss-7.2-3-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.2 LTS with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.2-alpine-lts"
+    GOSS_FILE: "goss-7.2-3-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.3:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.3-alpine"
+    GOSS_FILE: "goss-7.3.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/alpine/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.3 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.3-alpine"
+    GOSS_FILE: "goss-7.3.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/alpine/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.3 LTS:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.3-alpine-lts"
+    GOSS_FILE: "goss-7.2-3-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.3 LTS with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.3-alpine-lts"
+    GOSS_FILE: "goss-7.2-3-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.4:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.4-alpine"
+    GOSS_FILE: "goss-7.4.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/alpine/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.4 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.4-alpine"
+    GOSS_FILE: "goss-7.4.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/alpine/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.4 LTS:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.4-alpine-lts"
+    GOSS_FILE: "goss-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 7.4 LTS with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.4-alpine-lts"
+    GOSS_FILE: "goss-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Alpine 8.0:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "8.0-alpine"
+    GOSS_FILE: "goss-8.0.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/alpine/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:alpine
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:alpine
+  when: always
+
+Alpine 8.0 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "8.0-alpine"
+    GOSS_FILE: "goss-8.0.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/alpine/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:alpine
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:alpine
+  when: always
+
+Alpine 8.0 LTS:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "8.0-alpine-lts"
+    GOSS_FILE: "goss-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:alpine-lts
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:alpine
+  when: always
+
+Alpine 8.0 LTS with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "8.0-alpine-lts"
+    GOSS_FILE: "goss-lts.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/alpine/Dockerfile-lts .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:alpine-lts
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:alpine
+  when: always
+
+Debian 7.2:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.2"
+    GOSS_FILE: "goss-7.2.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Debian 7.2 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.2"
+    GOSS_FILE: "goss-7.2.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Debian 7.3:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.3"
+    GOSS_FILE: "goss-7.3.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Debian 7.3 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.3"
+    GOSS_FILE: "goss-7.3.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+Debian 7.4:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.4"
+    GOSS_FILE: "goss-7.4.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:7
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:7
+  when: always
+
+Debian 7.4 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.4"
+    GOSS_FILE: "goss-7.4.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:7
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:7
+  when: always
+
+Debian 8.0:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "8.0"
+    GOSS_FILE: "goss-8.0.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:latest
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:8
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:8
+    - docker push $NAMESPACE:latest
+  when: always
+
+Debian 8.0 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "8.0"
+    GOSS_FILE: "goss-8.0.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:latest
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:8
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:8
+    - docker push $NAMESPACE:latest
+  when: always
+
+FPM 7.2:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.2-fpm"
+    GOSS_FILE: "goss-7.2.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+FPM 7.2 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.2-fpm"
+    GOSS_FILE: "goss-7.2.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.2/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+FPM 7.3:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.3-fpm"
+    GOSS_FILE: "goss-7.3.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+FPM 7.3 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.3-fpm"
+    GOSS_FILE: "goss-7.3.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+FPM 7.4:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "7.4-fpm"
+    GOSS_FILE: "goss-7.4.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+FPM 7.4 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "7.4-fpm"
+    GOSS_FILE: "goss-7.4.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: always
+
+FPM 8.0:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php"
+    IMAGE_VERSION: "8.0-fpm"
+    GOSS_FILE: "goss-8.0.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:fpm
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:fpm
+  when: always
+
+FPM 8.0 with composer v1:
+  stage: build
+  variables:
+    NAMESPACE: "mrofi/gitlab-ci-pipeline-php-composer-1"
+    IMAGE_VERSION: "8.0-fpm"
+    GOSS_FILE: "goss-8.0.yaml"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg COMPOSER_VERSION=1 -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/fpm/Dockerfile .
+    - docker run -t --rm -v $(pwd):/var/www/html $NAMESPACE:$IMAGE_VERSION goss -g tests/$GOSS_FILE v
+    - docker tag $NAMESPACE:$IMAGE_VERSION $NAMESPACE:fpm
+    - docker push $NAMESPACE:$IMAGE_VERSION
+    - docker push $NAMESPACE:fpm
+  when: always
+
