@@ -1,4 +1,5 @@
-FROM mrofi/gitlab-ci-pipeline-php-composer-1:7.2
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}:7.2
 
 ARG BUILD_DATE
 ARG VCS_REF
