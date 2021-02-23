@@ -20,7 +20,7 @@ ENV IMAGE_USER=php
 ENV HOME=/home/$IMAGE_USER
 ENV COMPOSER_HOME=$HOME/.composer
 ENV PATH=$HOME/.yarn/bin:$PATH
-ENV GOSS_VERSION="0.3.8"
+ENV GOSS_VERSION="0.3.16"
 ENV PHP_VERSION=7.2
 
 USER root
@@ -41,7 +41,6 @@ RUN bash ./packages.sh \
   mkdir -p /var/www/html && \
   chown -R $IMAGE_USER:$IMAGE_USER /var/www $HOME \
   && rm -rf ~/.composer/cache/* \
-  && chown -R $IMAGE_USER:$IMAGE_USER $COMPOSER_HOME \
   && curl -fsSL https://goss.rocks/install | GOSS_VER=v${GOSS_VERSION} sh \
   && bash ./cleanup.sh
 

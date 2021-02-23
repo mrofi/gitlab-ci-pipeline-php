@@ -20,7 +20,7 @@ ENV IMAGE_USER=php
 ENV HOME=/home/$IMAGE_USER
 ENV COMPOSER_HOME=$HOME/.composer
 ENV PATH=$HOME/.yarn/bin:$PATH
-ENV GOSS_VERSION="0.3.8"
+ENV GOSS_VERSION="0.3.16"
 ENV PHP_VERSION=7.2
 
 USER root
@@ -32,7 +32,7 @@ COPY --from=composer_image /usr/bin/composer /usr/bin/composer
 COPY ./php/scripts/*.sh /tmp/
 RUN chmod +x /tmp/*.sh
 
-# Install
+# Install2
 RUN bash ./packages.sh \
   && bash ./extensions.sh \
   && bash ./node.sh \
@@ -40,10 +40,9 @@ RUN bash ./packages.sh \
   echo "PATH=$(yarn global bin):$PATH" >> /root/.profile && \
   echo "PATH=$(yarn global bin):$PATH" >> /root/.bashrc && \
   echo "$IMAGE_USER  ALL = ( ALL ) NOPASSWD: ALL" >> /etc/sudoers && \
-  mkdir -p /var/www/html && \
-  chown -R $IMAGE_USER:$IMAGE_USER /var/www $HOME \
+  mkdir -p /var/www/html \
   && rm -rf ~/.composer/cache/* \
-  && chown -R $IMAGE_USER:$IMAGE_USER $COMPOSER_HOME \
+  && chown -R $IMAGE_USER:$IMAGE_USER /var/www $HOME \
   && curl -fsSL https://goss.rocks/install | GOSS_VER=v${GOSS_VERSION} sh \
   && bash ./cleanup.sh
 
