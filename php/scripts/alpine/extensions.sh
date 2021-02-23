@@ -64,16 +64,25 @@ fi
 
 docker-php-ext-install -j "$(nproc)" gd
 
-
-git clone --depth 1 -b 3.0.2 "https://github.com/xdebug/xdebug" \
-  && cd xdebug \
-  && phpize \
-  && ./configure \
-  && make clean \
-  && make \
-  && make install \
-  && docker-php-ext-enable xdebug
-
+if [[ $PHP_VERSION == "8.0" || $PHP_VERSION == "7.4" ]]; then
+  git clone --depth 1 -b 3.0.2 "https://github.com/xdebug/xdebug" \
+    && cd xdebug \
+    && phpize \
+    && ./configure \
+    && make clean \
+    && make \
+    && make install \
+    && docker-php-ext-enable xdebug
+else
+  git clone --depth 1 -b 2.9.8 "https://github.com/xdebug/xdebug" \
+    && cd xdebug \
+    && phpize \
+    && ./configure \
+    && make clean \
+    && make \
+    && make install \
+    && docker-php-ext-enable xdebug
+fi
 docker-php-source extract \
     && curl -L -o /tmp/redis.tar.gz "https://github.com/phpredis/phpredis/archive/5.3.3.tar.gz" \
     && tar xfz /tmp/redis.tar.gz \
